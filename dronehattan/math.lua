@@ -16,4 +16,17 @@ function M.normalize(x, y)
   return x / length, y / length, length
 end
 
+function M.mix(a, b, t)
+  return a * (1 - t) + b * t
+end
+
+function M.mix2(ax, ay, bx, by, tx, ty)
+  ty = ty or tx
+
+  local x = M.mix(ax, bx, tx)
+  local y = M.mix(ay, by, ty)
+
+  return x, y
+end
+
 return M
