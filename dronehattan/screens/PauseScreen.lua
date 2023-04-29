@@ -9,7 +9,6 @@ function M.new(application)
       {
         title = "Resume",
         handler = function()
-          love.mouse.setRelativeMode(true)
           application:popScreen()
 
           local screen = application:peekScreen()
