@@ -1,6 +1,7 @@
 local Class = require("dronehattan.Class")
 local DrawHandler = require("dronehattan.handlers.DrawHandler")
 local ffi = require("ffi")
+local FixedUpdateVelocityHandler = require("dronehattan.handlers.FixedUpdateVelocityHandler")
 local heart = require("heart")
 local PauseScreen = require("dronehattan.screens.PauseScreen")
 local ResizeHandler = require("dronehattan.handlers.ResizeHandler")
@@ -70,6 +71,7 @@ function M:init(application)
   self.engine:addEvent("update")
 
   self.engine:addEventHandler("draw", DrawHandler.new(self.engine))
+  self.engine:addEventHandler("fixedupdate", FixedUpdateVelocityHandler.new(self.engine))
   self.engine:addEventHandler("resize", ResizeHandler.new(self.engine))
   self.engine:addEventHandler("update", UpdateClockHandler.new(self.engine))
 
@@ -79,7 +81,7 @@ function M:init(application)
     drone = {},
     position = {},
     size = {0.5, 0.5},
-    velocity = {},
+    velocity = {0, -1},
   })
 
   sparrow.newRow(database, {
