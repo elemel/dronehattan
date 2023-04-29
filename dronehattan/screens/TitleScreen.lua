@@ -10,7 +10,11 @@ function M.new(application)
       {
         title = "Play",
         handler = function()
-          application:pushScreen(GameScreen.new(application))
+          local screen = GameScreen.new(application)
+          application:pushScreen(screen)
+
+          local width, height = love.graphics.getDimensions()
+          screen:handleEvent("resize", width, height)
         end,
       },
 
