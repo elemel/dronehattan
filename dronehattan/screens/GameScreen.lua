@@ -5,6 +5,7 @@ local heart = require("heart")
 local PauseScreen = require("dronehattan.screens.PauseScreen")
 local ResizeHandler = require("dronehattan.handlers.ResizeHandler")
 local sparrow = require("sparrow")
+local UpdateClockHandler = require("dronehattan.handlers.UpdateClockHandler")
 
 ffi.cdef([[
   typedef struct color4 {
@@ -55,7 +56,14 @@ function M:init(application)
   self.engine:setProperty("application", self.application)
   self.engine:setProperty("database", database)
 
+  self.engine:setProperty("clock", {
+    fixedDt = 1 / 60,
+    accumulatedDt = 0,
+    maxAccumulatedDt = 0.1,
+  })
+
   self.engine:addEvent("draw")
+  self.engine:addEvent("fixedupdate")
   self.engine:addEvent("keypressed")
   self.engine:addEvent("keyreleased")
   self.engine:addEvent("resize")
@@ -63,6 +71,7 @@ function M:init(application)
 
   self.engine:addEventHandler("draw", DrawHandler.new(self.engine))
   self.engine:addEventHandler("resize", ResizeHandler.new(self.engine))
+  self.engine:addEventHandler("update", UpdateClockHandler.new(self.engine))
 
   sparrow.newRow(database, {
     angle = 0.25 * math.pi,
