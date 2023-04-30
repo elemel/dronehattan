@@ -10,8 +10,8 @@ function M.new(engine)
     arguments = {"angle", "position", "scale", "viewport"},
   })
 
-  local droneQuery = sparrow.newQuery(database, {
-    inclusions = {"angle", "color", "drone", "position", "size"},
+  local rectangleQuery = sparrow.newQuery(database, {
+    inclusions = {"angle", "color", "position", "size"},
     arguments = {"angle", "color", "position", "size"},
   })
 
@@ -27,8 +27,10 @@ function M.new(engine)
 
       local cameraViewportScale = scale * viewport.size.y
       love.graphics.scale(cameraViewportScale)
+      love.graphics.rotate(-angle)
+      love.graphics.translate(-position.x, -position.y)
 
-      droneQuery:forEach(function(angle, color, position, size)
+      rectangleQuery:forEach(function(angle, color, position, size)
         love.graphics.push("all")
         love.graphics.translate(position.x, position.y)
         love.graphics.rotate(angle)

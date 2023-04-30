@@ -57,6 +57,7 @@ function M:init(application)
   sparrow.newColumn(database, "angle", "float")
   sparrow.newColumn(database, "camera", "tag")
   sparrow.newColumn(database, "car", "tag")
+  sparrow.newColumn(database, "cityBlock", "tag")
   sparrow.newColumn(database, "color", "color4")
   sparrow.newColumn(database, "drag", "float")
   sparrow.newColumn(database, "drone", "tag")
@@ -101,6 +102,35 @@ function M:init(application)
   self.engine:addEventHandler("resize", ResizeHandler.new(self.engine))
   self.engine:addEventHandler("update", UpdateClockHandler.new(self.engine))
 
+  local cityBlockLength = 274
+  local cityBlockWidth = 80
+
+  local avenueWidth = 30
+  local streetWidth = 18
+
+  -- for x = 1, 11 do
+  --   for y = 1, 124 do
+  --     sparrow.newRow(database, {
+  --       color = {0.5, 0.5, 0.5, 1},
+  --       cityBlock = {},
+  --       position = {x * cityBlockLength, y * cityBlockWidth},
+  --       angle = 0,
+  --       size = {cityBlockLength - avenueWidth, cityBlockWidth - streetWidth},
+  --     })
+  --   end
+  -- end
+
+  sparrow.newRow(database, {
+    angle = -29 * math.pi / 180,
+    camera = {},
+    position = {6 * cityBlockLength, 62.5 * cityBlockWidth},
+    scale = 0.05,
+
+    viewport = {
+      size = {800, 600},
+    },
+  })
+
   sparrow.newRow(database, {
     angle = 0,
     color = {0, 0.5, 1, 1},
@@ -112,27 +142,9 @@ function M:init(application)
     maxTurnSpeed = 5,
     maxSpeed = 10,
     player = {},
-    position = {},
-    size = {0.5, 0.5},
+    position = {6 * cityBlockLength, 62.5 * cityBlockWidth},
+    size = {1, 1},
     velocity = {0, 0},
-  })
-
-  sparrow.newRow(database, {
-    car = {},
-    position = {},
-    angle = 0,
-    size = {1.8, 4.4},
-  })
-
-  sparrow.newRow(database, {
-    angle = 0,
-    camera = {},
-    position = {},
-    scale = 0.1,
-
-    viewport = {
-      size = {800, 600},
-    },
   })
 end
 
